@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - Gestion des Tâches</title>
+    <style>
+      /* Styles généraux */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    max-width: 900px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn {
+    display: inline-block;
+    background: #28a745;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #218838;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 14px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+th {
+    background: #007bff;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tr:hover {
+    background: #e9ecef;
+    transition: 0.2s;
+}
+
+/* Actions */
+.actions a {
+    margin: 0 4px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.details { background: #17a2b8; color: white; }
+.modifier { background: #ffc107; color: black; }
+.supprimer { background: #dc3545; color: white; }
+
+.actions a:hover {
+    opacity: 0.9;
+}
+
+/* Features */
+ul.features {
+    list-style: none;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+ul.features li a {
+    background: #6c757d;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+ul.features li a:hover {
+    background: #5a6268;
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    table, th, td {
+        font-size: 13px;
+    }
+    .btn {
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>👋 Bienvenue, {{ request.user.username }} ({{ role|capfirst }}) !</h2>
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'profil' %}">👤 Mon Profil</a></li>
+                <li><a href="{% url 'connexion' %}">🚪 Se déconnecter</a></li>
+            </ul>
+        </nav>
+
+        <p><a href="{% url 'creer_projet' %}" class="btn">➕ Créer un projet</a></p>
+
+        <h3>📌 Mes Projets</h3>
+
+        {% if projets %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom du Projet</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for projet in projets %}
+                        <tr>
+                            <td>{{ projet.nom }}</td>
+                            <td class="actions">
+                                <a href="{% url 'detail_projet' projet.id %}">🔍 Voir détails</a>
+                               <a href="{% url 'modifier_projet' projet.id %}" class="modifier">✏️ Modifier</a>
+<a href="{% url 'supprimer_projet' projet.id %}" class="supprimer" onclick="return confirm('Voulez-vous vraiment supprimer ce projet ?');">❌ Supprimer</a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun projet trouvé.</p>
+        {% endif %}
+
+
+        <ul class="features">
+
+            {% if role == 'professeur' %}
+                <li><a href="{% url 'creer_tache' projet.id %}">📝 Ajouter une tâche</a></li>
+            {% endif %}
+
+        </ul>
+
+        <footer>
+            <p>&copy; 2025 Gestion des Tâches - ESMT</p>
+        </footer>
+    </div>
+
+</body>
+</html>

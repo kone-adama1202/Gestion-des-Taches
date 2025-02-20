@@ -1,0 +1,113 @@
+{% extends 'taches/base_generic.html' %}
+
+{% block content %}
+<style>
+    .project-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    p.description {
+        font-size: 16px;
+        color: #555;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 5px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    ul.taches-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    ul.taches-list li {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    ul.taches-list li span {
+        font-weight: 500;
+    }
+
+    .no-tasks {
+        text-align: center;
+        color: #888;
+        font-style: italic;
+    }
+
+    .navigation {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="project-container">
+    <h2>📁 {{ projet.nom }}</h2>
+    <p class="description">{{ projet.description }}</p>
+
+    <div class="navigation">
+        <a href="{% url 'creer_tache' projet.id %}" class="btn btn-primary">➕ Ajouter une tâche</a>
+        <a href="{% url 'accueil' %}" class="btn btn-secondary">🏠 Retour à l'accueil</a>
+    </div>
+
+    <h3>📋 Liste des Tâches</h3>
+    {% if taches %}
+        <ul class="taches-list">
+            {% for tache in taches %}
+                <li>
+                    <span>✅ {{ tache.nom }}</span>
+                    <span>👤 Assigné à {{ tache.assigne_a.username }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-tasks">Aucune tâche assignée pour ce projet.</p>
+    {% endif %}
+</div>
+{% endblock %}

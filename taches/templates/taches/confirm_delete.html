@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmer la suppression</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #e74c3c; /* Couleur rouge pour le titre */
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #e74c3c; /* Couleur rouge pour le bouton de suppression */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #c0392b; /* Couleur rouge plus foncé au survol */
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #007BFF; /* Couleur bleue pour le lien d'annulation */
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        a:hover {
+            background-color: #007BFF; /* Couleur bleue au survol */
+            color: #fff; /* Texte blanc au survol */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirmer la suppression</h2>
+        <p>Voulez-vous vraiment supprimer le projet : <strong>{{ projet.nom }}</strong> ?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="supprimer">❌ Oui, supprimer</button>
+            <br>
+            <a href="{% url 'detail_projet' projet.id %}">Annuler</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!-- taches/modifier_profil.html -->
+{% extends 'taches/base_generic.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7f9fc;
+        color: #333;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+    }
+
+    form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    fieldset {
+        border: none;
+        margin-bottom: 1.5rem;
+    }
+
+    legend {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #dcdfe6;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button[name="changer_mot_de_passe"] {
+        background-color: #e74c3c;
+    }
+
+    button:hover {
+        background-color: #27ae60;
+        transform: translateY(-2px);
+    }
+
+    button[name="changer_mot_de_passe"]:hover {
+        background-color: #c0392b;
+    }
+
+    hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(to right, #f7f7f7, #dcdfe6, #f7f7f7);
+        margin: 30px 0;
+    }
+
+    @media (max-width: 600px) {
+        form {
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+</style>
+
+<h2>Modifier le profil</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <legend>📋 Informations personnelles</legend>
+        {{ profil_form.as_p }}
+        <button type="submit" name="modifier_infos">✅ Mettre à jour</button>
+    </fieldset>
+</form>
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>🔒 Changer le mot de passe</legend>
+        {{ password_form.as_p }}
+        <button type="submit" name="changer_mot_de_passe">🔐 Changer le mot de passe</button>
+    </fieldset>
+</form>
+{% endblock %}

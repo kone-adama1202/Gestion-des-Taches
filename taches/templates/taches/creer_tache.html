@@ -1,0 +1,15 @@
+<h2>Créer une tâche pour le projet "{{ projet.nom }}"</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ajouter la tâche</button>
+</form>
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
